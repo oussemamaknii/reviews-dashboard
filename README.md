@@ -1,178 +1,125 @@
 # Flex Living Reviews Dashboard
 
-A comprehensive review management system for Flex Living properties that integrates with Hostaway API and provides managers with powerful tools to assess property performance and manage guest reviews.
+A full-stack review management platform for Flex Living with unified data model, manager dashboard, and public review pages. Integrates Hostaway and Yelp, normalizes data, and provides bulk moderation, analytics, and exports.
 
-## Technology Stack
+## Tech stack
 
-### Frontend Framework: Next.js 14 with App Router
-**Why chosen:**
-- **Full-stack capabilities**: API routes eliminate need for separate backend
-- **Server-side rendering**: Better SEO and performance for public review pages
-- **App Router**: Modern file-based routing with layouts and streaming
-- **TypeScript support**: Built-in type safety and developer experience
-- **Production-ready**: Deployed by Vercel with excellent performance optimizations
+- Frontend: Next.js 15 (App Router) + TypeScript
+- Styling: Tailwind CSS + shadcn/ui + Radix UI
+- State: Zustand
+- Charts: Recharts
+- Mapping: Leaflet + react-leaflet (client-only)
+- Dates: date-fns
+- Backend: Next.js Route Handlers (serverless-friendly)
+- DB/ORM: Prisma + SQLite (dev) / PostgreSQL (prod)
 
-### Styling: Tailwind CSS + shadcn/ui
-**Why chosen:**
-- **Rapid development**: Utility-first CSS for fast prototyping
-- **Consistent design**: Pre-built component library (shadcn/ui) with professional aesthetics
-- **Customizable**: Easy theming and brand alignment for Flex Living
-- **Performance**: Purged CSS bundle, only includes used styles
-- **Developer experience**: IntelliSense support and responsive design utilities
+## Key design and logic decisions
 
-### Database: Prisma ORM + PostgreSQL
-**Why chosen:**
-- **Type safety**: Generated TypeScript types from database schema
-- **Migration system**: Version-controlled database schema changes
-- **Query builder**: Intuitive API with excellent performance
-- **Local development**: Easy setup with Docker or local PostgreSQL
-- **Production ready**: Supports connection pooling and optimization
+- Unified Review Model
+  - `Property` and `Review` are the core entities. Reviews have `channel` (e.g. `hostaway`, `yelp`), `status` (`pending|approved|rejected`), and optional `categories`.
+  - All 3rd-party reviews are normalized into this schema; channel-specific metadata is dropped or mapped.
+- Idempotent ingestion
+  - External review IDs are prefixed and used as primary keys (e.g. `yelp_<reviewId>`), enabling safe re-runs (upsert).
+  - Properties from external systems are deterministically keyed (e.g. `yelp_<businessId>`).
+- Moderation-first
+  - Reviews default to `pending` unless explicitly approved by ingest or by manager action.
+  - Public endpoints return only `approved` content.
+- Resilience & fallbacks (Yelp)
+  - Primary: Yelp Fusion v3 `/businesses/{id}/reviews`.
+  - If unavailable/empty: ask Yelp AI for minimal review summaries for that business and persist them with `channel = 'yelp'`.
+  - We removed the `review_highlights` fallback due to authorization restrictions for standard keys.
+- Performance & UX
+  - Server rendering for public view; React Server Components where practical.
+  - Client-only map is dynamically imported with resize invalidation to avoid gray tiles and overflow.
 
-### State Management: Zustand
-**Why chosen:**
-- **Lightweight**: Minimal boilerplate compared to Redux
-- **TypeScript native**: Excellent type inference and safety
-- **Simple API**: Easy to learn and implement
-- **Performance**: Selective subscriptions prevent unnecessary re-renders
-- **DevTools**: Excellent debugging capabilities
+## Database schema (Prisma)
 
-### UI Components: Radix UI + Lucide React
-**Why chosen:**
-- **Accessibility**: WAI-ARIA compliant components out of the box
-- **Headless**: Unstyled components allow custom design implementation
-- **Keyboard navigation**: Full keyboard support for all interactive elements
-- **Screen reader support**: Semantic HTML and proper ARIA attributes
-- **Icon library**: Consistent, professional icon set (Lucide React)
+- Dev: SQLite (`DATABASE_URL="file:./prisma/dev.db"`).
+- Prod: Switch to `postgresql` provider and set `DATABASE_URL` accordingly.
+- Entities:
+  - `Property(id, name, location, imageUrl, pricePerNight, maxGuests, createdAt, updatedAt)`
+  - `Review(id, propertyId, channel, guestName, rating, reviewText, submittedAt, status, isPublic, createdAt, updatedAt)`
+  - `ReviewCategory(id, reviewId, category, rating)`
 
-### Data Visualization: Recharts
-**Why chosen:**
-- **React native**: Built specifically for React applications
-- **Responsive**: Mobile-friendly charts with touch interactions
-- **Customizable**: Extensive theming and styling options
-- **Performance**: Optimized rendering for large datasets
-- **TypeScript support**: Full type definitions included
+## API behaviors
 
-### Date Handling: date-fns
-**Why chosen:**
-- **Tree-shakable**: Import only needed functions, reducing bundle size
-- **Immutable**: Pure functions prevent date mutation bugs
-- **Timezone support**: Proper handling of international properties
-- **Performance**: Faster than Moment.js with smaller footprint
-- **TypeScript**: Full type safety for date operations
+- GET `/api/reviews/hostaway`
+  - Query: `page`, `pageSize`
+  - Returns: `{ success, data: NormalizedReview[] }`
+- GET `/api/reviews/public/[property]`
+  - Path param: `property` (name or `all`)
+  - Query: `page`, `pageSize`
+  - Returns: `{ success, data: { property_name, reviews, statistics } }`
+- GET `/api/reviews/yelp/search`
+  - Query: `query`, `location` (default: `London, UK`), `categories`
+  - Returns: `{ success, data: NormalizedReview[] }` (combined business search + reviews fetch)
+- POST `/api/yelp/ingest`
+  - Body: `{ location: string, maxBusinesses?: number }`
+  - Behavior:
+    - Uses Yelp AI to return business IDs (min 2 reviews constraint).
+    - Upserts properties and attempts `/v3/businesses/{id}/reviews?limit=20&sort_by=yelp_sort`.
+    - If no reviews, asks Yelp AI for minimal top reviews and persists them.
+  - Returns: `{ success, ingested, totalCandidates, businessIds, reviewUrls, failures }`
+- POST `/api/reviews/update-status`
+  - Body: `{ id: string, status: 'pending'|'approved'|'rejected' }`
+  - Returns: `{ success: true }`
+- POST `/api/reviews/bulk-update-status`
+  - Body: `{ ids: string[], status: 'pending'|'approved'|'rejected' }`
+  - Returns: `{ success: true }`
 
-## Architecture Decisions
+## Yelp integration
 
-### API Integration Strategy
-```
-Hostaway API → Data Normalization Layer → Database → Dashboard
-                                   ↓
-                       Foursquare Places API (Optional)
-```
+- Authentication
+  - Set `YELP_API_KEY` in environment.
+- Endpoints used
+  - Yelp Fusion v3: `/businesses/search`, `/businesses/{id}`, `/businesses/{id}/reviews`.
+  - Yelp AI Chat v2: `POST https://api.yelp.com/ai/chat/v2`.
+- Business discovery
+  - Primary: Ask Yelp AI to return `business_ids` for apartment/real estate renting in a given location; filtered to have at least 2 reviews.
+  - Fallback: Fusion search with categories `apartments, realestateagents, propertymgmt`, filtered by `review_count >= 2`.
+- Reviews retrieval
+  - Primary: `/businesses/{id}/reviews?limit=20&sort_by=yelp_sort`.
+  - Fallback: Ask Yelp AI to summarize minimal top reviews; persist with `channel = 'yelp'`.
+- Known constraints
+  - Some business IDs may 404 on `/reviews`; handled by fallbacks.
+  - `/review_highlights` requires elevated access and is not used.
 
-**Benefits:**
-- **Data consistency**: Single source of truth after normalization
-- **Performance**: Cached data reduces API calls
-- **Reliability**: Graceful fallback to mock data during API issues
-- **Scalability**: Background sync jobs for large datasets
+## Setup & usage
 
-### Component Architecture
-```
-Pages (App Router) → Layout Components → Feature Components → UI Components
-```
+### Prerequisites
+- Node 18+
+- Env vars:
+  - `DATABASE_URL` (dev default: `file:./prisma/dev.db`)
+  - `YELP_API_KEY` (required for Yelp)
 
-**Benefits:**
-- **Reusability**: Shared components across manager and public interfaces
-- **Maintainability**: Clear separation of concerns
-- **Testing**: Isolated components enable focused unit tests
-- **Performance**: Code splitting at route level
-
-### Data Flow Pattern
-```
-API Routes → Services → Database → React Query → Components
-```
-
-**Benefits:**
-- **Caching**: React Query handles data fetching and caching
-- **Optimistic updates**: Immediate UI feedback for manager actions
-- **Error handling**: Centralized error states and retry logic
-- **Real-time sync**: Background refetching keeps data current
-
-## Key Features
-
-### Manager Dashboard
-- **Property Performance Analytics**: Rating trends, review volume, category breakdowns
-- **Advanced Filtering**: By date range, rating, channel, property, guest type
-- **Bulk Actions**: Approve/reject multiple reviews simultaneously
-- **Issue Detection**: Automated flagging of negative patterns
-- **Export Capabilities**: CSV export for external analysis
-
-### Public Review Display
-- **Approved Reviews Only**: Manager-curated content for public display
-- **Responsive Design**: Mobile-optimized layout matching Flex Living style
-- **Performance Optimized**: Server-side rendering with caching
-- **SEO Friendly**: Structured data markup for search engines
-
-### Data Management
-- **Real-time Sync**: Automated Hostaway API synchronization
-- **Conflict Resolution**: Handles duplicate reviews across channels
-- **Data Validation**: Schema validation for all incoming review data
-- **Audit Trail**: Complete history of manager actions and review changes
-
-## Development Workflow
-
-### Local Development
+### Install & run
 ```bash
-npm run dev          # Start development server
-npm run build        # Production build
-npm run lint         # ESLint code analysis
-npm run type-check   # TypeScript compilation check
+npm install
+npm run dev
 ```
+Visit http://localhost:3000
 
-### Database Management
+### Build & lint
 ```bash
-npx prisma generate  # Generate TypeScript client
-npx prisma db push   # Push schema to database
-npx prisma studio    # Visual database browser
+npm run build
+npm run lint
 ```
 
-### Code Quality
-- **ESLint**: Code linting with Next.js recommended rules
-- **TypeScript**: Strict mode enabled for maximum type safety
-- **Prettier**: Consistent code formatting
-- **Husky**: Pre-commit hooks for quality assurance
+### Database (Prisma)
+```bash
+npx prisma generate
+npx prisma db push
+npx prisma studio
+```
 
-## Performance Optimizations
+### Yelp ingest examples
+```bash
+curl -X POST http://localhost:3000/api/yelp/ingest \
+  -H 'content-type: application/json' \
+  -d '{"location":"London, UK","maxBusinesses":5}'
+```
 
-### Frontend
-- **Server Components**: Reduced JavaScript bundle size
-- **Image Optimization**: Next.js automatic image optimization
-- **Code Splitting**: Route-based and component-based splitting
-- **Caching**: Static generation for public pages
-
-### Backend
-- **Database Indexing**: Optimized queries for review filtering
-- **API Rate Limiting**: Prevents abuse of Hostaway API
-- **Connection Pooling**: Efficient database connection management
-- **Background Jobs**: Non-blocking data synchronization
-
-## Security Considerations
-
-### Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `FOURSQUARE_API_KEY` | Server-side API key for Foursquare Places. **Do not expose to client** |
-
-### Data Protection
-- **API Key Security**: Environment variables for sensitive credentials
-- **Input Validation**: Zod schemas for all API endpoints
-- **SQL Injection Prevention**: Prisma ORM parameterized queries
-- **Rate Limiting**: Protection against API abuse
-
-### Access Control
-- **Manager Authentication**: Secure login for dashboard access
-- **Role-based Permissions**: Different access levels for team members
-- **Audit Logging**: Complete trail of all manager actions
-- **CSRF Protection**: Built-in Next.js security features
-
-This technology stack provides a robust, scalable, and maintainable solution for Flex Living's review management needs while ensuring excellent user experience for both managers and property guests.
+## Notes
+- Public pages render only `approved` reviews.
+- The dashboard supports searching, filtering, bulk status updates, and CSV export.
+- The map on properties pages is client-only and sized to its container with resize invalidation to avoid tile gray-outs.
