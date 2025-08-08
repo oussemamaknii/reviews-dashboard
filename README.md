@@ -67,6 +67,21 @@ A full-stack review management platform for Flex Living with unified data model,
   - Body: `{ ids: string[], status: 'pending'|'approved'|'rejected' }`
   - Returns: `{ success: true }`
 
+## Analytics & Insights
+
+The dashboard includes a rich Insights section to make review data actionable:
+
+- Rolling averages: 7-day and 28-day rating averages with trend lines
+- Review velocity: daily reviews bar chart to track inflow
+- Status over time: stacked area chart (approved/pending/rejected)
+- Topic signals: lightweight NLP to surface top negative themes (e.g., cleanliness, Wi‑Fi, noise, check‑in)
+- Anomaly banner: highlights a significant drop in the 7-day average vs 28-day and links to pre-filtered view
+- Needs Attention: properties flagged for low average rating or high pending backlog, with quick filter chips
+
+Operational notes:
+- Global Insight metrics are computed from the full dataset (not impacted by current UI filters)
+- Pagination is handled client-side to aggregate all pages from the reviews API for accurate totals
+
 ## Yelp integration
 
 - Authentication

@@ -95,7 +95,7 @@ export default function DashboardPage() {
 
             {/* Main Content */}
             <Tabs defaultValue="reviews" className="space-y-6">
-                <TabsList className="border bg-secondary">
+                <TabsList className="border bg-white">
                     <TabsTrigger value="reviews">Reviews Management</TabsTrigger>
                     <TabsTrigger value="analytics">Analytics & Insights</TabsTrigger>
                 </TabsList>

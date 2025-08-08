@@ -118,15 +118,22 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     fetchReviews: async () => {
         set({ loading: true, error: null })
         try {
-            const response = await fetch('/api/reviews/hostaway')
-            if (!response.ok) throw new Error('Failed to fetch reviews')
+            const pageSize = 100
+            let page = 1
+            let totalPages = 1
+            const all: NormalizedReview[] = [] as unknown as NormalizedReview[]
 
-            const data = await response.json()
-            if (data.success) {
-                get().setReviews(data.data)
-            } else {
-                throw new Error(data.error || 'Unknown error')
-            }
+            do {
+                const res = await fetch(`/api/reviews/hostaway?page=${page}&pageSize=${pageSize}`)
+                if (!res.ok) throw new Error('Failed to fetch reviews')
+                const json = await res.json() as { success: boolean; data: NormalizedReview[]; pagination?: { totalPages?: number } }
+                if (!json.success) throw new Error('Failed to fetch reviews')
+                all.push(...json.data)
+                totalPages = json.pagination?.totalPages || 1
+                page += 1
+            } while (page <= totalPages)
+
+            get().setReviews(all)
         } catch (error) {
             set({ error: error instanceof Error ? error.message : 'Unknown error' })
         } finally {
@@ -136,6 +143,7 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
 }))
 
 function applyFilters(reviews: NormalizedReview[], filters: ReviewFilters): NormalizedReview[] {
+    const q = (filters.query || '').trim().toLowerCase()
     return reviews.filter(review => {
         if (filters.property && review.property_name !== filters.property) return false
         if (filters.channel && review.channel !== filters.channel) return false
@@ -144,6 +152,10 @@ function applyFilters(reviews: NormalizedReview[], filters: ReviewFilters): Norm
         if (filters.date_from && review.submitted_at < filters.date_from) return false
         if (filters.date_to && review.submitted_at > filters.date_to) return false
         if (filters.status && filters.status !== 'all' && review.status !== filters.status) return false
+        if (q) {
+            const hay = `${review.review_text} ${review.property_name} ${review.guest_name}`.toLowerCase()
+            if (!hay.includes(q)) return false
+        }
 
         return true
     })

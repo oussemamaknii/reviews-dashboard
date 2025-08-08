@@ -47,6 +47,7 @@ export interface ReviewFilters {
     date_from?: Date
     date_to?: Date
     status?: 'pending' | 'approved' | 'rejected' | 'all'
+    query?: string
 }
 
 export interface PropertyStats {

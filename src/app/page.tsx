@@ -6,33 +6,40 @@ import { Star, BarChart3, Users, Settings } from 'lucide-react'
 export default function HomePage() {
   return (
     <div className="container mx-auto p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-5xl mx-auto space-y-10">
         {/* Hero Section */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            Flex Living Reviews Dashboard
+        <div className="text-center space-y-5 pt-6">
+          <div className="inline-flex items-center rounded-full px-3 py-1 text-xs border text-muted-foreground">
+            Flex Living · Reviews & Reputation
+          </div>
+          <h1 className="text-5xl font-bold tracking-tight">
+            <span className="brand-gradient-text">Reviews Dashboard</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Manage guest reviews, monitor property performance, and maintain your reputation
-            across all booking channels from one central dashboard.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Centralize guest feedback, analyze trends, and publish only the best reviews to your property pages.
           </p>
-          <div className="flex justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link href="/dashboard">
-              <Button size="lg">
+              <Button size="lg" className="w-full sm:w-auto">
                 <BarChart3 className="h-5 w-5 mr-2" />
                 Open Dashboard
               </Button>
             </Link>
             <Link href="/properties">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 <Star className="h-5 w-5 mr-2" />
                 View Properties & Reviews
+              </Button>
+            </Link>
+            <Link href="/yelp-reviews">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                Sync Yelp Reviews
               </Button>
             </Link>
           </div>
         </div>
 
-        {/* Features Grid */}
+        {/* Feature Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
@@ -41,15 +48,15 @@ export default function HomePage() {
                 <CardTitle>Review Management</CardTitle>
               </div>
               <CardDescription>
-                Approve, reject, and moderate guest reviews from all channels
+                Approve, reject, and curate guest reviews across channels
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Bulk approval actions</li>
-                <li>• Detailed review analysis</li>
+                <li>• Bulk approve/reject</li>
                 <li>• Category-based ratings</li>
-                <li>• Status tracking</li>
+                <li>• Status workflow</li>
+                <li>• CSV export</li>
               </ul>
             </CardContent>
           </Card>
@@ -95,33 +102,27 @@ export default function HomePage() {
           </Card>
         </div>
 
-        {/* Quick Stats Preview */}
+        {/* How it works */}
         <Card>
           <CardHeader>
-            <CardTitle>System Overview</CardTitle>
-            <CardDescription>
-              Current status of the reviews management system
-            </CardDescription>
+            <CardTitle>How it works</CardTitle>
+            <CardDescription>From ingestion to publish in 3 steps</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">5</div>
-                <div className="text-sm text-muted-foreground">Properties</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">5</div>
-                <div className="text-sm text-muted-foreground">Total Reviews</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-600">8.3</div>
-                <div className="text-sm text-muted-foreground">Avg Rating</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-accent">1</div>
-                <div className="text-sm text-muted-foreground">Channels</div>
-              </div>
-            </div>
+            <ol className="grid grid-cols-1 md:grid-cols-3 gap-6 list-decimal list-inside">
+              <li>
+                <div className="font-semibold">Ingest</div>
+                <div className="text-sm text-muted-foreground">Pull reviews from Hostaway and Yelp, normalize to a single schema.</div>
+              </li>
+              <li>
+                <div className="font-semibold">Moderate</div>
+                <div className="text-sm text-muted-foreground">Approve or reject in the dashboard with filters and bulk actions.</div>
+              </li>
+              <li>
+                <div className="font-semibold">Publish</div>
+                <div className="text-sm text-muted-foreground">Only approved reviews appear on property pages.</div>
+              </li>
+            </ol>
           </CardContent>
         </Card>
 
@@ -153,9 +154,9 @@ export default function HomePage() {
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold">4. Export Data</h4>
+              <h4 className="font-semibold">4. Import Yelp</h4>
               <p className="text-sm text-muted-foreground">
-                Export review data as CSV for external analysis or reporting purposes.
+                Use the Yelp page to search/import reviews or run the server endpoint to ingest businesses.
               </p>
             </div>
           </CardContent>

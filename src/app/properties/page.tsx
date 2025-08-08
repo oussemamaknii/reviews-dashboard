@@ -40,6 +40,27 @@ export default function PropertiesPage() {
         }))
         setProperties(mapped)
         setLoading(false)
+
+        // Fetch live review stats per property and merge
+        ;(async () => {
+            try {
+                type StatsResponse = { success: boolean; data: { statistics: { average_rating: number; total_reviews: number } } }
+                const updates = await Promise.all(mapped.map(async (p) => {
+                    try {
+                        const res = await fetch(`/api/reviews/public/${encodeURIComponent(p.name)}`)
+                        const json = await res.json() as StatsResponse
+                        if (json.success) {
+                            return { name: p.name, avg: json.data.statistics.average_rating, total: json.data.statistics.total_reviews }
+                        }
+                    } catch {}
+                    return { name: p.name, avg: 0, total: 0 }
+                }))
+                setProperties(prev => prev.map(prop => {
+                    const u = updates.find(x => x.name === prop.name)
+                    return u ? { ...prop, averageRating: u.avg, totalReviews: u.total } : prop
+                }))
+            } catch {}
+        })()
     }, [])
 
     const [page, setPage] = useState(1)

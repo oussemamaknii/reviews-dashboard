@@ -94,11 +94,11 @@ export function ReviewTable() {
     const getStatusIcon = (status: string) => {
         switch (status) {
             case 'approved':
-                return <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                return <CheckCircle className="h-4 w-4 text-green-600" />
             case 'rejected':
-                return <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                return <XCircle className="h-4 w-4 text-red-600" />
             case 'pending':
-                return <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                return <Clock className="h-4 w-4 text-yellow-600" />
             default:
                 return null
         }
@@ -107,13 +107,13 @@ export function ReviewTable() {
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'approved':
-                return 'bg-green-100 text-green-800'
+                return 'bg-white text-green-700 border border-green-200'
             case 'rejected':
-                return 'bg-red-100 text-red-800'
+                return 'bg-white text-red-700 border border-red-200'
             case 'pending':
-                return 'bg-yellow-100 text-yellow-800'
+                return 'bg-white text-yellow-700 border border-yellow-200'
             default:
-                return 'bg-gray-100 text-gray-800'
+                return 'bg-white text-gray-800 border border-gray-200'
         }
     }
 
@@ -137,7 +137,7 @@ export function ReviewTable() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => bulkUpdateStatus('approved')}
-                                className="text-green-600 hover:text-green-700 dark:text-green-400"
+                                className="text-green-600 hover:text-green-700"
                             >
                                 <CheckCircle className="h-4 w-4 mr-1" />
                                 Approve
@@ -146,7 +146,7 @@ export function ReviewTable() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => bulkUpdateStatus('rejected')}
-                                className="text-red-600 hover:text-red-700 dark:text-red-400"
+                                className="text-red-600 hover:text-red-700"
                             >
                                 <XCircle className="h-4 w-4 mr-1" />
                                 Reject
@@ -164,7 +164,7 @@ export function ReviewTable() {
             </CardHeader>
 
             <CardContent>
-                <div className="rounded-md border">
+                <div className="rounded-md border bg-white">
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -299,15 +299,15 @@ export function ReviewTable() {
                                                     <MoreHorizontal className="h-4 w-4" />
                                                 </Button>
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem onClick={() => setSelectedReview(review)}>
+                                            <DropdownMenuContent align="end" className="bg-white border border-gray-200">
+                                                <DropdownMenuItem onClick={() => setSelectedReview(review)} className="bg-white hover:bg-gray-100">
                                                     <Eye className="h-4 w-4 mr-2" />
                                                     View Details
                                                 </DropdownMenuItem>
                                                 {review.status !== 'approved' && (
                                                     <DropdownMenuItem
                                                         onClick={() => updateReviewStatus(review.id, 'approved')}
-                                                        className="text-green-600"
+                                                        className="text-green-600 bg-white hover:bg-gray-100"
                                                     >
                                                         <CheckCircle className="h-4 w-4 mr-2" />
                                                         Approve
@@ -316,7 +316,7 @@ export function ReviewTable() {
                                                 {review.status !== 'rejected' && (
                                                     <DropdownMenuItem
                                                         onClick={() => updateReviewStatus(review.id, 'rejected')}
-                                                        className="text-red-600"
+                                                        className="text-red-600 bg-white hover:bg-gray-100"
                                                     >
                                                         <XCircle className="h-4 w-4 mr-2" />
                                                         Reject
@@ -325,7 +325,7 @@ export function ReviewTable() {
                                                 {review.status !== 'pending' && (
                                                     <DropdownMenuItem
                                                         onClick={() => updateReviewStatus(review.id, 'pending')}
-                                                        className="text-yellow-600"
+                                                        className="text-yellow-600 bg-white hover:bg-gray-100"
                                                     >
                                                         <Clock className="h-4 w-4 mr-2" />
                                                         Set Pending

@@ -21,8 +21,8 @@ export function ReviewFilters() {
     ).length
 
     return (
-        <Card className="shadow-sm border-gray-200 dark:border-gray-700">
-            <CardHeader className="bg-gray-50 dark:bg-gray-800/50">
+        <Card className="shadow-sm border-gray-200 bg-white">
+            <CardHeader className="bg-white">
                 <div className="flex items-center justify-between">
                     <CardTitle className="flex items-center gap-2">
                         <Filter className="h-5 w-5" />
@@ -56,40 +56,49 @@ export function ReviewFilters() {
                 </div>
             </CardHeader>
 
-            <CardContent className="space-y-4 bg-white dark:bg-gray-900">
+            <CardContent className="space-y-4 bg-white">
                 {/* Always visible filters */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="md:col-span-2">
+                        <label className="text-sm font-semibold mb-2 block text-gray-700">Search</label>
+                        <Input
+                            placeholder="Search by text, property or guest..."
+                            value={filters.query || ''}
+                            onChange={(e) => setFilters({ query: e.target.value })}
+                            className="bg-white border-gray-300"
+                        />
+                    </div>
                     <div>
-                        <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Status</label>
+                        <label className="text-sm font-semibold mb-2 block text-gray-700">Status</label>
                         <Select
                             value={filters.status || 'all'}
                             onValueChange={(value) => setFilters({ status: value as 'pending' | 'approved' | 'rejected' | 'all' })}
                         >
-                            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <SelectTrigger className="bg-white border-gray-300 hover:bg-gray-50">
                                 <SelectValue placeholder="All statuses" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
-                                <SelectItem value="all" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">All Statuses</SelectItem>
-                                <SelectItem value="pending" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">Pending</SelectItem>
-                                <SelectItem value="approved" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">Approved</SelectItem>
-                                <SelectItem value="rejected" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">Rejected</SelectItem>
+                            <SelectContent className="bg-white border-gray-300">
+                                <SelectItem value="all" className="bg-white hover:bg-gray-100">All Statuses</SelectItem>
+                                <SelectItem value="pending" className="bg-white hover:bg-gray-100">Pending</SelectItem>
+                                <SelectItem value="approved" className="bg-white hover:bg-gray-100">Approved</SelectItem>
+                                <SelectItem value="rejected" className="bg-white hover:bg-gray-100">Rejected</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
 
                     <div>
-                        <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Property</label>
+                        <label className="text-sm font-semibold mb-2 block text-gray-700">Property</label>
                         <Select
                             value={filters.property || 'all'}
                             onValueChange={(value) => setFilters({ property: value === 'all' ? undefined : value })}
                         >
-                            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <SelectTrigger className="bg-white border-gray-300 hover:bg-gray-50">
                                 <SelectValue placeholder="All properties" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
-                                <SelectItem value="all" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">All Properties</SelectItem>
+                            <SelectContent className="bg-white border-gray-300">
+                                <SelectItem value="all" className="bg-white hover:bg-gray-100">All Properties</SelectItem>
                                 {uniqueProperties.map(property => (
-                                    <SelectItem key={property} value={property} className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <SelectItem key={property} value={property} className="bg-white hover:bg-gray-100">
                                         {property}
                                     </SelectItem>
                                 ))}
@@ -98,18 +107,18 @@ export function ReviewFilters() {
                     </div>
 
                     <div>
-                        <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Channel</label>
+                        <label className="text-sm font-semibold mb-2 block text-gray-700">Channel</label>
                         <Select
                             value={filters.channel || 'all'}
                             onValueChange={(value) => setFilters({ channel: value === 'all' ? undefined : value })}
                         >
-                            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <SelectTrigger className="bg-white border-gray-300 hover:bg-gray-50">
                                 <SelectValue placeholder="All channels" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
-                                <SelectItem value="all" className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">All Channels</SelectItem>
+                            <SelectContent className="bg-white border-gray-300">
+                                <SelectItem value="all" className="bg-white hover:bg-gray-100">All Channels</SelectItem>
                                 {uniqueChannels.map(channel => (
-                                    <SelectItem key={channel} value={channel} className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <SelectItem key={channel} value={channel} className="bg-white hover:bg-gray-100">
                                         {channel.charAt(0).toUpperCase() + channel.slice(1)}
                                     </SelectItem>
                                 ))}
@@ -122,7 +131,7 @@ export function ReviewFilters() {
                 {isExpanded && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
                         <div>
-                            <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Min Rating</label>
+                            <label className="text-sm font-semibold mb-2 block text-gray-700">Min Rating</label>
                             <Input
                                 type="number"
                                 min="0"
@@ -133,12 +142,12 @@ export function ReviewFilters() {
                                     rating_min: e.target.value ? parseFloat(e.target.value) : undefined
                                 })}
                                 placeholder="0.0"
-                                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                                className="bg-white border-gray-300"
                             />
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Max Rating</label>
+                            <label className="text-sm font-semibold mb-2 block text-gray-700">Max Rating</label>
                             <Input
                                 type="number"
                                 min="0"
@@ -149,31 +158,31 @@ export function ReviewFilters() {
                                     rating_max: e.target.value ? parseFloat(e.target.value) : undefined
                                 })}
                                 placeholder="10.0"
-                                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                                className="bg-white border-gray-300"
                             />
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">From Date</label>
+                            <label className="text-sm font-semibold mb-2 block text-gray-700">From Date</label>
                             <Input
                                 type="date"
                                 value={filters.date_from ? filters.date_from.toISOString().split('T')[0] : ''}
                                 onChange={(e) => setFilters({
                                     date_from: e.target.value ? new Date(e.target.value) : undefined
                                 })}
-                                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                                className="bg-white border-gray-300"
                             />
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">To Date</label>
+                            <label className="text-sm font-semibold mb-2 block text-gray-700">To Date</label>
                             <Input
                                 type="date"
                                 value={filters.date_to ? filters.date_to.toISOString().split('T')[0] : ''}
                                 onChange={(e) => setFilters({
                                     date_to: e.target.value ? new Date(e.target.value) : undefined
                                 })}
-                                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                                className="bg-white border-gray-300"
                             />
                         </div>
                     </div>
