@@ -20,7 +20,7 @@ export function formatRating(rating: number): string {
 
 export function getReviewChannelColor(channel: string): string {
     const colors: Record<string, string> = {
-        'hostaway': 'bg-blue-100 text-blue-800',
+        'hostaway': 'bg-primary/10 text-primary',
         'google': 'bg-green-100 text-green-800',
         'airbnb': 'bg-red-100 text-red-800',
         'booking': 'bg-yellow-100 text-yellow-800',

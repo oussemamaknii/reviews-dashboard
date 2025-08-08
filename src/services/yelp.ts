@@ -167,8 +167,8 @@ export class YelpService {
                             updated_at: now
                         })
                     }
-                } catch (reviewError: any) {
-                    console.warn(`Failed to fetch reviews for ${business.name}, using business info:`, reviewError.message)
+                } catch (reviewError: unknown) {
+                    console.warn(`Failed to fetch reviews for ${business.name}, using business info:`, (reviewError instanceof Error ? reviewError.message : String(reviewError)))
 
                     // Fallback to business info
                     reviews.push({

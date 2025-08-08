@@ -102,7 +102,7 @@ export function PropertyHero({
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 {amenities.map((amenity, index) => (
                                     <div key={index} className="flex items-center gap-2 p-3 bg-white rounded-lg border">
-                                        <amenity.icon className="h-5 w-5 text-blue-600" />
+                                        <amenity.icon className="h-5 w-5 text-primary" />
                                         <span className="text-sm font-medium text-gray-700">{amenity.label}</span>
                                     </div>
                                 ))}
@@ -116,7 +116,7 @@ export function PropertyHero({
                                 Experience modern living in the heart of London with this beautifully designed apartment.
                                 Featuring contemporary furnishings, high-speed internet, and all the amenities you need for
                                 a comfortable stay. Perfect for business travelers, couples, or anyone looking for a premium
-                                accommodation experience in one of London's most vibrant neighborhoods.
+                                accommodation experience in one of London&#39;s most vibrant neighborhoods.
                             </p>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ export function PropertyHero({
                                     </label>
                                     <input
                                         type="date"
-                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
                                     />
                                 </div>
                                 <div>
@@ -149,14 +149,14 @@ export function PropertyHero({
                                     </label>
                                     <input
                                         type="date"
-                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Guests
                                     </label>
-                                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <select className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent">
                                         <option>1 guest</option>
                                         <option>2 guests</option>
                                         <option>3 guests</option>
@@ -165,12 +165,12 @@ export function PropertyHero({
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 text-lg">
+                            <Button className="w-full text-white font-semibold py-3 text-lg">
                                 Book Now
                             </Button>
 
                             <div className="text-center text-sm text-gray-500 mt-4">
-                                You won't be charged yet
+                                You won&#39;t be charged yet
                             </div>
                         </div>
                     </div>

@@ -14,8 +14,8 @@ export async function GET(request: Request) {
     try {
         const reviews = await yelpService.getReviewsByQuery(query, location, categories)
         return NextResponse.json({ success: true, data: reviews })
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ Yelp API Route Error:', error)
-        return NextResponse.json({ success: false, error: error?.message || 'Unknown error' }, { status: 503 })
+        return NextResponse.json({ success: false, error: (error instanceof Error ? error.message : 'Unknown error') }, { status: 503 })
     }
 }

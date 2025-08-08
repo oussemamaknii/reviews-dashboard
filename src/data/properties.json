@@ -1,0 +1,502 @@
+[
+  {
+    "id": "prop-1b-a0-b-shoreditch-heights",
+    "name": "1B A0 B - Shoreditch Heights",
+    "location": "Shoreditch, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 70,
+    "maxGuests": 2,
+    "latitude": 51.50061248350515,
+    "longitude": -0.15506468092038
+  },
+  {
+    "id": "prop-2b-b1-a-canary-wharf-gardens",
+    "name": "2B B1 A - Canary Wharf Gardens",
+    "location": "Canary Wharf, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 71,
+    "maxGuests": 3,
+    "latitude": 51.5516107390201,
+    "longitude": -0.05722175278046368
+  },
+  {
+    "id": "prop-3b-c2-b-paddington-residences",
+    "name": "3B C2 B - Paddington Residences",
+    "location": "Paddington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 72,
+    "maxGuests": 4,
+    "latitude": 51.493212045342744,
+    "longitude": -0.21755123077619676
+  },
+  {
+    "id": "prop-1b-d3-a-victoria-apartments",
+    "name": "1B D3 A - Victoria Apartments",
+    "location": "Victoria, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 73,
+    "maxGuests": 2,
+    "latitude": 51.52160621011486,
+    "longitude": -0.24660950836397091
+  },
+  {
+    "id": "prop-2b-e4-b-soho-lofts",
+    "name": "2B E4 B - Soho Lofts",
+    "location": "Soho, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 74,
+    "maxGuests": 3,
+    "latitude": 51.543564868206744,
+    "longitude": -0.11612482357886669
+  },
+  {
+    "id": "prop-3b-f5-a-camden-mews",
+    "name": "3B F5 A - Camden Mews",
+    "location": "Camden, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 75,
+    "maxGuests": 4,
+    "latitude": 51.511372566807765,
+    "longitude": -0.0687722160253395
+  },
+  {
+    "id": "prop-1b-a6-b-notting-hill-court",
+    "name": "1B A6 B - Notting Hill Court",
+    "location": "Notting Hill, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 76,
+    "maxGuests": 2,
+    "latitude": 51.56305237297947,
+    "longitude": -0.08662788980416497
+  },
+  {
+    "id": "prop-2b-b7-a-kensington-house",
+    "name": "2B B7 A - Kensington House",
+    "location": "Kensington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 77,
+    "maxGuests": 3,
+    "latitude": 51.46628515443034,
+    "longitude": -0.19532909580649255
+  },
+  {
+    "id": "prop-3b-c8-b-chelsea-place",
+    "name": "3B C8 B - Chelsea Place",
+    "location": "Chelsea, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 78,
+    "maxGuests": 4,
+    "latitude": 51.4598416665303,
+    "longitude": -0.08139891076768482
+  },
+  {
+    "id": "prop-1b-d9-a-greenwich-tower",
+    "name": "1B D9 A - Greenwich Tower",
+    "location": "Greenwich, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 79,
+    "maxGuests": 2,
+    "latitude": 51.46481503654855,
+    "longitude": -0.12076835354352072
+  },
+  {
+    "id": "prop-2b-e0-b-wimbledon-point",
+    "name": "2B E0 B - Wimbledon Point",
+    "location": "Wimbledon, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 80,
+    "maxGuests": 3,
+    "latitude": 51.5569729862679,
+    "longitude": -0.24321383832839963
+  },
+  {
+    "id": "prop-3b-f1-a-islington-crescent",
+    "name": "3B F1 A - Islington Crescent",
+    "location": "Islington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 81,
+    "maxGuests": 4,
+    "latitude": 51.50395905469172,
+    "longitude": -0.21127423172701437
+  },
+  {
+    "id": "prop-1b-a2-b-southwark-heights",
+    "name": "1B A2 B - Southwark Heights",
+    "location": "Southwark, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 82,
+    "maxGuests": 2,
+    "latitude": 51.4730559950941,
+    "longitude": -0.16679913205315705
+  },
+  {
+    "id": "prop-2b-b3-a-marylebone-gardens",
+    "name": "2B B3 A - Marylebone Gardens",
+    "location": "Marylebone, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 83,
+    "maxGuests": 3,
+    "latitude": 51.53588361408874,
+    "longitude": -0.17431389466442404
+  },
+  {
+    "id": "prop-3b-c4-b-mayfair-residences",
+    "name": "3B C4 B - Mayfair Residences",
+    "location": "Mayfair, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 84,
+    "maxGuests": 4,
+    "latitude": 51.466327289753565,
+    "longitude": -0.23545987934539242
+  },
+  {
+    "id": "prop-1b-d5-a-hammersmith-apartments",
+    "name": "1B D5 A - Hammersmith Apartments",
+    "location": "Hammersmith, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 85,
+    "maxGuests": 2,
+    "latitude": 51.4681252218556,
+    "longitude": -0.11528801267657829
+  },
+  {
+    "id": "prop-2b-e6-b-brixton-lofts",
+    "name": "2B E6 B - Brixton Lofts",
+    "location": "Brixton, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 86,
+    "maxGuests": 3,
+    "latitude": 51.535095451476074,
+    "longitude": -0.03830355446853792
+  },
+  {
+    "id": "prop-3b-f7-a-clapham-mews",
+    "name": "3B F7 A - Clapham Mews",
+    "location": "Clapham, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 87,
+    "maxGuests": 4,
+    "latitude": 51.51285014399442,
+    "longitude": -0.09346228888209784
+  },
+  {
+    "id": "prop-1b-a8-b-hampstead-court",
+    "name": "1B A8 B - Hampstead Court",
+    "location": "Hampstead, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 88,
+    "maxGuests": 2,
+    "latitude": 51.51629427780811,
+    "longitude": -0.23459357926545038
+  },
+  {
+    "id": "prop-2b-b9-a-richmond-house",
+    "name": "2B B9 A - Richmond House",
+    "location": "Richmond, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 89,
+    "maxGuests": 3,
+    "latitude": 51.53931631679471,
+    "longitude": -0.235729424475097
+  },
+  {
+    "id": "prop-3b-c0-b-shoreditch-place",
+    "name": "3B C0 B - Shoreditch Place",
+    "location": "Shoreditch, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 90,
+    "maxGuests": 4,
+    "latitude": 51.545483946309325,
+    "longitude": -0.13771520003262594
+  },
+  {
+    "id": "prop-1b-d1-a-canary-wharf-tower",
+    "name": "1B D1 A - Canary Wharf Tower",
+    "location": "Canary Wharf, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 91,
+    "maxGuests": 2,
+    "latitude": 51.55252874685227,
+    "longitude": -0.2284061581419085
+  },
+  {
+    "id": "prop-2b-e2-b-paddington-point",
+    "name": "2B E2 B - Paddington Point",
+    "location": "Paddington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 92,
+    "maxGuests": 3,
+    "latitude": 51.519062171494475,
+    "longitude": -0.19001431819530626
+  },
+  {
+    "id": "prop-3b-f3-a-victoria-crescent",
+    "name": "3B F3 A - Victoria Crescent",
+    "location": "Victoria, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 93,
+    "maxGuests": 4,
+    "latitude": 51.56244105233865,
+    "longitude": -0.06269167112475627
+  },
+  {
+    "id": "prop-1b-a4-b-soho-heights",
+    "name": "1B A4 B - Soho Heights",
+    "location": "Soho, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 94,
+    "maxGuests": 2,
+    "latitude": 51.535172879965664,
+    "longitude": -0.1452910572819794
+  },
+  {
+    "id": "prop-2b-b5-a-camden-gardens",
+    "name": "2B B5 A - Camden Gardens",
+    "location": "Camden, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 95,
+    "maxGuests": 3,
+    "latitude": 51.55693924629519,
+    "longitude": -0.1302503442500621
+  },
+  {
+    "id": "prop-3b-c6-b-notting-hill-residences",
+    "name": "3B C6 B - Notting Hill Residences",
+    "location": "Notting Hill, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 96,
+    "maxGuests": 4,
+    "latitude": 51.482502785689576,
+    "longitude": -0.09780706121579191
+  },
+  {
+    "id": "prop-1b-d7-a-kensington-apartments",
+    "name": "1B D7 A - Kensington Apartments",
+    "location": "Kensington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 97,
+    "maxGuests": 2,
+    "latitude": 51.51666086009706,
+    "longitude": -0.12125210309548826
+  },
+  {
+    "id": "prop-2b-e8-b-chelsea-lofts",
+    "name": "2B E8 B - Chelsea Lofts",
+    "location": "Chelsea, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 98,
+    "maxGuests": 3,
+    "latitude": 51.48684308183924,
+    "longitude": -0.04652884442234928
+  },
+  {
+    "id": "prop-3b-f9-a-greenwich-mews",
+    "name": "3B F9 A - Greenwich Mews",
+    "location": "Greenwich, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 99,
+    "maxGuests": 4,
+    "latitude": 51.491585143136334,
+    "longitude": -0.22153701049162589
+  },
+  {
+    "id": "prop-1b-a0-b-wimbledon-court",
+    "name": "1B A0 B - Wimbledon Court",
+    "location": "Wimbledon, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 100,
+    "maxGuests": 2,
+    "latitude": 51.5579674011774,
+    "longitude": -0.07783369055222461
+  },
+  {
+    "id": "prop-2b-b1-a-islington-house",
+    "name": "2B B1 A - Islington House",
+    "location": "Islington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 101,
+    "maxGuests": 3,
+    "latitude": 51.5554984991947,
+    "longitude": -0.14154148477430234
+  },
+  {
+    "id": "prop-3b-c2-b-southwark-place",
+    "name": "3B C2 B - Southwark Place",
+    "location": "Southwark, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 102,
+    "maxGuests": 4,
+    "latitude": 51.47194732236073,
+    "longitude": -0.0582444509785566
+  },
+  {
+    "id": "prop-1b-d3-a-marylebone-tower",
+    "name": "1B D3 A - Marylebone Tower",
+    "location": "Marylebone, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 103,
+    "maxGuests": 2,
+    "latitude": 51.47073441389727,
+    "longitude": -0.03258266946324753
+  },
+  {
+    "id": "prop-2b-e4-b-mayfair-point",
+    "name": "2B E4 B - Mayfair Point",
+    "location": "Mayfair, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 104,
+    "maxGuests": 3,
+    "latitude": 51.458521710061746,
+    "longitude": -0.23179640955309622
+  },
+  {
+    "id": "prop-3b-f5-a-hammersmith-crescent",
+    "name": "3B F5 A - Hammersmith Crescent",
+    "location": "Hammersmith, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 105,
+    "maxGuests": 4,
+    "latitude": 51.46061157217785,
+    "longitude": -0.08802776315347849
+  },
+  {
+    "id": "prop-1b-a6-b-brixton-heights",
+    "name": "1B A6 B - Brixton Heights",
+    "location": "Brixton, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 106,
+    "maxGuests": 2,
+    "latitude": 51.554594263331445,
+    "longitude": -0.0499863388462021
+  },
+  {
+    "id": "prop-2b-b7-a-clapham-gardens",
+    "name": "2B B7 A - Clapham Gardens",
+    "location": "Clapham, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 107,
+    "maxGuests": 3,
+    "latitude": 51.47797622201613,
+    "longitude": -0.10801924800980714
+  },
+  {
+    "id": "prop-3b-c8-b-hampstead-residences",
+    "name": "3B C8 B - Hampstead Residences",
+    "location": "Hampstead, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 108,
+    "maxGuests": 4,
+    "latitude": 51.554270298658494,
+    "longitude": -0.17551521252767582
+  },
+  {
+    "id": "prop-1b-d9-a-richmond-apartments",
+    "name": "1B D9 A - Richmond Apartments",
+    "location": "Richmond, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 109,
+    "maxGuests": 2,
+    "latitude": 51.500210972165746,
+    "longitude": -0.24046967255626667
+  },
+  {
+    "id": "prop-2b-e0-b-shoreditch-lofts",
+    "name": "2B E0 B - Shoreditch Lofts",
+    "location": "Shoreditch, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 110,
+    "maxGuests": 3,
+    "latitude": 51.538356903116174,
+    "longitude": -0.18019411182090186
+  },
+  {
+    "id": "prop-3b-f1-a-canary-wharf-mews",
+    "name": "3B F1 A - Canary Wharf Mews",
+    "location": "Canary Wharf, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 111,
+    "maxGuests": 4,
+    "latitude": 51.54247272310415,
+    "longitude": -0.11764989222281971
+  },
+  {
+    "id": "prop-1b-a2-b-paddington-court",
+    "name": "1B A2 B - Paddington Court",
+    "location": "Paddington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 112,
+    "maxGuests": 2,
+    "latitude": 51.50188607768446,
+    "longitude": -0.12353536738416993
+  },
+  {
+    "id": "prop-2b-b3-a-victoria-house",
+    "name": "2B B3 A - Victoria House",
+    "location": "Victoria, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 113,
+    "maxGuests": 3,
+    "latitude": 51.54721247067376,
+    "longitude": -0.051933335458710345
+  },
+  {
+    "id": "prop-3b-c4-b-soho-place",
+    "name": "3B C4 B - Soho Place",
+    "location": "Soho, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 114,
+    "maxGuests": 4,
+    "latitude": 51.534465634710166,
+    "longitude": -0.15119265143321695
+  },
+  {
+    "id": "prop-1b-d5-a-camden-tower",
+    "name": "1B D5 A - Camden Tower",
+    "location": "Camden, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 115,
+    "maxGuests": 2,
+    "latitude": 51.50371831994284,
+    "longitude": -0.20068512992053564
+  },
+  {
+    "id": "prop-2b-e6-b-notting-hill-point",
+    "name": "2B E6 B - Notting Hill Point",
+    "location": "Notting Hill, London",
+    "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+    "pricePerNight": 116,
+    "maxGuests": 3,
+    "latitude": 51.45805285678289,
+    "longitude": -0.13324865914072417
+  },
+  {
+    "id": "prop-3b-f7-a-kensington-crescent",
+    "name": "3B F7 A - Kensington Crescent",
+    "location": "Kensington, London",
+    "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+    "pricePerNight": 117,
+    "maxGuests": 4,
+    "latitude": 51.47883553297469,
+    "longitude": -0.009271983397387495
+  },
+  {
+    "id": "prop-1b-a8-b-chelsea-heights",
+    "name": "1B A8 B - Chelsea Heights",
+    "location": "Chelsea, London",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
+    "pricePerNight": 118,
+    "maxGuests": 2,
+    "latitude": 51.52991016717409,
+    "longitude": -0.00963299037025861
+  },
+  {
+    "id": "prop-2b-b9-a-greenwich-gardens",
+    "name": "2B B9 A - Greenwich Gardens",
+    "location": "Greenwich, London",
+    "imageUrl": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+    "pricePerNight": 119,
+    "maxGuests": 3,
+    "latitude": 51.5621168366799,
+    "longitude": -0.23767220924088062
+  }
+]

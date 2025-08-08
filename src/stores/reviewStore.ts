@@ -62,15 +62,19 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
         set({ filters: initialFilters, filteredReviews })
     },
 
-    updateReviewStatus: (reviewId, status) => {
-        const reviews = get().reviews.map(review =>
-            review.id === reviewId
-                ? { ...review, status, updated_at: new Date() }
-                : review
-        )
-        const properties = calculatePropertyStats(reviews)
-        const filteredReviews = applyFilters(reviews, get().filters)
-        set({ reviews, properties, filteredReviews })
+    updateReviewStatus: async (reviewId, status) => {
+        try {
+            set({ loading: true })
+            await fetch('/api/reviews/update-status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: reviewId, status })
+            })
+            // Refetch from source of truth
+            await get().fetchReviews()
+        } finally {
+            set({ loading: false })
+        }
     },
 
     toggleReviewSelection: (reviewId) => {
@@ -92,16 +96,20 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
         set({ selectedReviews: new Set() })
     },
 
-    bulkUpdateStatus: (status) => {
-        const selectedIds = get().selectedReviews
-        const reviews = get().reviews.map(review =>
-            selectedIds.has(review.id)
-                ? { ...review, status, updated_at: new Date() }
-                : review
-        )
-        const properties = calculatePropertyStats(reviews)
-        const filteredReviews = applyFilters(reviews, get().filters)
-        set({ reviews, properties, filteredReviews, selectedReviews: new Set() })
+    bulkUpdateStatus: async (status) => {
+        try {
+            set({ loading: true })
+            const selectedIds = Array.from(get().selectedReviews)
+            await fetch('/api/reviews/bulk-update-status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: selectedIds, status })
+            })
+            await get().fetchReviews()
+            set({ selectedReviews: new Set() })
+        } finally {
+            set({ loading: false })
+        }
     },
 
     setLoading: (loading) => set({ loading }),

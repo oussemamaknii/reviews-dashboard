@@ -57,7 +57,7 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <BarChart3 className="h-6 w-6 text-blue-500" />
+                <BarChart3 className="h-6 w-6 text-primary" />
                 <CardTitle>Analytics & Insights</CardTitle>
               </div>
               <CardDescription>
@@ -106,7 +106,7 @@ export default function HomePage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">5</div>
+                <div className="text-2xl font-bold text-primary">5</div>
                 <div className="text-sm text-muted-foreground">Properties</div>
               </div>
               <div className="text-center">
@@ -118,7 +118,7 @@ export default function HomePage() {
                 <div className="text-sm text-muted-foreground">Avg Rating</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">1</div>
+                <div className="text-2xl font-bold text-accent">1</div>
                 <div className="text-sm text-muted-foreground">Channels</div>
               </div>
             </div>

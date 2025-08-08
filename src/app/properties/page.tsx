@@ -1,7 +1,9 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import propertiesData from '@/data/properties.json'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -15,59 +17,35 @@ interface Property {
     imageUrl: string
     pricePerNight: number
     maxGuests: number
+    latitude?: number
+    longitude?: number
 }
 
 export default function PropertiesPage() {
+    const PropertiesMap = dynamic(() => import('@/components/properties/PropertiesMap').then(m => m.PropertiesMap), { ssr: false })
     const [properties, setProperties] = useState<Property[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        // In a real app, this would fetch from an API
-        // For demo, we'll use the property names from our mock data
-        const mockProperties: Property[] = [
-            {
-                name: "2B N1 A - 29 Shoreditch Heights",
-                location: "Shoreditch, London",
-                averageRating: 8.5,
-                totalReviews: 2,
-                imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
-                pricePerNight: 89,
-                maxGuests: 4
-            },
-            {
-                name: "1B E1 B - 15 Canary Wharf Tower",
-                location: "Canary Wharf, London",
-                averageRating: 8.7,
-                totalReviews: 1,
-                imageUrl: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-                pricePerNight: 95,
-                maxGuests: 2
-            },
-            {
-                name: "Studio W2 C - 42 Paddington Central",
-                location: "Paddington, London",
-                averageRating: 6.5,
-                totalReviews: 1,
-                imageUrl: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
-                pricePerNight: 75,
-                maxGuests: 2
-            },
-            {
-                name: "2B SW1 D - 88 Victoria Gardens",
-                location: "Victoria, London",
-                averageRating: 9.8,
-                totalReviews: 1,
-                imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
-                pricePerNight: 105,
-                maxGuests: 4
-            }
-        ]
-
-        setTimeout(() => {
-            setProperties(mockProperties)
-            setLoading(false)
-        }, 1000)
+        const mapped: Property[] = (propertiesData as Array<{ name: string; location: string; imageUrl: string; pricePerNight: number; maxGuests: number; latitude?: number; longitude?: number }>).map((p) => ({
+            name: p.name,
+            location: p.location,
+            averageRating: 0,
+            totalReviews: 0,
+            imageUrl: p.imageUrl,
+            pricePerNight: p.pricePerNight,
+            maxGuests: p.maxGuests,
+            latitude: p.latitude,
+            longitude: p.longitude,
+        }))
+        setProperties(mapped)
+        setLoading(false)
     }, [])
+
+    const [page, setPage] = useState(1)
+    const pageSize = 12
+    const totalPages = Math.max(1, Math.ceil(properties.length / pageSize))
+    const paged = useMemo(() => properties.slice((page - 1) * pageSize, page * pageSize), [properties, page])
 
     if (loading) {
         return (
@@ -98,7 +76,7 @@ export default function PropertiesPage() {
                         </Link>
                         <div className="flex items-center gap-4">
                             <span className="text-sm text-gray-500">Flex Living</span>
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center brand-gradient">
                                 <span className="text-white font-semibold text-sm">FL</span>
                             </div>
                         </div>
@@ -111,76 +89,113 @@ export default function PropertiesPage() {
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Properties</h1>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Discover premium accommodation options across London's most desirable locations
+                        Discover premium accommodation options across London&#39;s most desirable locations
                     </p>
                 </div>
 
-                {/* Properties Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {properties.map((property, index) => (
-                        <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                            <div className="relative">
-                                <img
-                                    src={property.imageUrl}
-                                    alt={property.name}
-                                    className="w-full h-48 object-cover"
-                                />
-                                <div className="absolute top-4 right-4">
-                                    <Badge className="bg-white text-gray-900 shadow-md">
-                                        £{property.pricePerNight}/night
-                                    </Badge>
+                {/* Main Layout: Content + Map */}
+                <div className="flex flex-col xl:flex-row gap-8">
+                    {/* Left Content */}
+                    <div className="flex-1 xl:max-w-4xl">
+                        {/* Properties Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {paged.map((property, index) => (
+                                <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                    <div className="relative">
+                                        <img
+                                            src={property.imageUrl}
+                                            alt={property.name}
+                                            className="w-full h-48 object-cover"
+                                        />
+                                        <div className="absolute top-4 right-4">
+                                            <Badge className="bg-white text-gray-900 shadow-md">
+                                                £{property.pricePerNight}/night
+                                            </Badge>
+                                        </div>
+                                    </div>
+
+                                    <CardHeader>
+                                        <CardTitle className="text-lg line-clamp-2">
+                                            {property.name.split(' - ')[0]}
+                                        </CardTitle>
+                                        <div className="flex items-center text-gray-600 text-sm">
+                                            <MapPin className="h-4 w-4 mr-1" />
+                                            {property.location}
+                                        </div>
+                                    </CardHeader>
+
+                                    <CardContent className="pt-0">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex items-center gap-1">
+                                                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                                    <span className="font-semibold">{property.averageRating}</span>
+                                                </div>
+                                                <span className="text-sm text-gray-500">
+                                                    ({property.totalReviews} {property.totalReviews === 1 ? 'review' : 'reviews'})
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1 text-sm text-gray-500">
+                                                <Users className="h-4 w-4" />
+                                                <span>{property.maxGuests} guests</span>
+                                            </div>
+                                        </div>
+
+                                        <Link href={`/properties/${encodeURIComponent(property.name)}`}>
+                                            <Button className="w-full">
+                                                View Property & Reviews
+                                            </Button>
+                                        </Link>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+
+                        {/* Pagination controls */}
+                        <div className="flex items-center justify-between mt-8">
+                            <div className="text-sm text-muted-foreground">Page {page} of {totalPages}</div>
+                            <div className="flex gap-2">
+                                <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Previous</Button>
+                                <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</Button>
+                            </div>
+                        </div>
+
+                        {/* Call to Action - Mobile/Desktop bottom */}
+                        <div className="mt-12 xl:hidden">
+                            <div className="bg-white rounded-2xl shadow-lg p-8">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                                    Can&#39;t find what you&#39;re looking for?
+                                </h2>
+                                <p className="text-gray-600 mb-6">
+                                    Our team is here to help you find the perfect accommodation for your needs.
+                                </p>
+                                <Button size="lg">
+                                    Contact Our Team
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Sidebar - Map */}
+                    <div className="xl:w-[560px] xl:sticky xl:top-24 xl:self-start">
+                        <div className="space-y-6">
+                            <PropertiesMap properties={properties} />
+
+                            {/* Call to Action - Desktop right sidebar */}
+                            <div className="hidden xl:block">
+                                <div className="bg-white rounded-2xl shadow-lg p-6">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-3">
+                                        Can&#39;t find what you&#39;re looking for?
+                                    </h2>
+                                    <p className="text-gray-600 mb-4 text-sm">
+                                        Our team is here to help you find the perfect accommodation for your needs.
+                                    </p>
+                                    <Button size="sm" className="w-full">
+                                        Contact Our Team
+                                    </Button>
                                 </div>
                             </div>
-
-                            <CardHeader>
-                                <CardTitle className="text-lg line-clamp-2">
-                                    {property.name.split(' - ')[0]}
-                                </CardTitle>
-                                <div className="flex items-center text-gray-600 text-sm">
-                                    <MapPin className="h-4 w-4 mr-1" />
-                                    {property.location}
-                                </div>
-                            </CardHeader>
-
-                            <CardContent className="pt-0">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex items-center gap-1">
-                                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                            <span className="font-semibold">{property.averageRating}</span>
-                                        </div>
-                                        <span className="text-sm text-gray-500">
-                                            ({property.totalReviews} {property.totalReviews === 1 ? 'review' : 'reviews'})
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center gap-1 text-sm text-gray-500">
-                                        <Users className="h-4 w-4" />
-                                        <span>{property.maxGuests} guests</span>
-                                    </div>
-                                </div>
-
-                                <Link href={`/properties/${encodeURIComponent(property.name)}`}>
-                                    <Button className="w-full">
-                                        View Property & Reviews
-                                    </Button>
-                                </Link>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-
-                {/* Call to Action */}
-                <div className="text-center mt-16">
-                    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                            Can't find what you're looking for?
-                        </h2>
-                        <p className="text-gray-600 mb-6">
-                            Our team is here to help you find the perfect accommodation for your needs.
-                        </p>
-                        <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                            Contact Our Team
-                        </Button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -191,7 +206,7 @@ export default function PropertiesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <div>
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center brand-gradient">
                                     <span className="text-white font-semibold text-sm">FL</span>
                                 </div>
                                 <span className="text-xl font-bold">Flex Living</span>

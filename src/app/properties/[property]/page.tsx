@@ -13,13 +13,15 @@ interface PropertyPageProps {
     }>
 }
 
+interface RatingDistributionItem { rating: number; count: number; percentage: number }
+
 interface PropertyData {
-    reviews: any[]
+    reviews: unknown[]
     statistics: {
         total_reviews: number
         average_rating: number
         category_averages: Record<string, number>
-        rating_distribution: any[]
+        rating_distribution: RatingDistributionItem[]
     }
     property_name: string
 }
@@ -39,15 +41,23 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
     useEffect(() => {
         if (propertyName) {
-            fetchPropertyData()
+            void (async () => {
+                try {
+                    const response = await fetch(`/api/reviews/public/${encodeURIComponent(propertyName)}`)
+                    const data = (await response.json()) as { success: boolean; data: PropertyData }
+                    if (data.success) setPropertyData(data.data)
+                } finally {
+                    setLoading(false)
+                }
+            })()
         }
     }, [propertyName])
 
-    const fetchPropertyData = async () => {
+    const fetchPropertyData = async (): Promise<void> => {
         try {
             setLoading(true)
             const response = await fetch(`/api/reviews/public/${encodeURIComponent(propertyName)}`)
-            const data = await response.json()
+            const data = (await response.json()) as { success: boolean; data: PropertyData }
 
             if (data.success) {
                 setPropertyData(data.data)
@@ -85,7 +95,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-2xl font-bold text-gray-900 mb-4">Property Not Found</h1>
-                    <p className="text-gray-600 mb-6">The property you're looking for doesn't exist or has been removed.</p>
+                    <p className="text-gray-600 mb-6">The property you&#39;re looking for doesn&#39;t exist or has been removed.</p>
                     <Link href="/properties">
                         <Button>
                             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -109,7 +119,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                         </Link>
                         <div className="flex items-center gap-4">
                             <span className="text-sm text-gray-500">Flex Living</span>
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center brand-gradient">
                                 <span className="text-white font-semibold text-sm">FL</span>
                             </div>
                         </div>
@@ -133,7 +143,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <div>
                             <div className="flex items-center gap-2 mb-4">
-                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center brand-gradient">
                                     <span className="text-white font-semibold text-sm">FL</span>
                                 </div>
                                 <span className="text-xl font-bold">Flex Living</span>

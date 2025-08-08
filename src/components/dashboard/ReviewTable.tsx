@@ -58,15 +58,15 @@ export function ReviewTable() {
     const [selectedReview, setSelectedReview] = useState<NormalizedReview | null>(null)
 
     const sortedReviews = [...filteredReviews].sort((a, b) => {
-        let aValue: any = a[sortField]
-        let bValue: any = b[sortField]
+        let aValue = a[sortField] as string | number | Date
+        let bValue = b[sortField] as string | number | Date
 
         if (sortField === 'submitted_at') {
             aValue = new Date(aValue).getTime()
             bValue = new Date(bValue).getTime()
         }
 
-        if (typeof aValue === 'string') {
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
             aValue = aValue.toLowerCase()
             bValue = bValue.toLowerCase()
         }
@@ -75,6 +75,12 @@ export function ReviewTable() {
         if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1
         return 0
     })
+
+    // Basic client-side pagination
+    const [page, setPage] = useState(1)
+    const pageSize = 20
+    const totalPages = Math.max(1, Math.ceil(sortedReviews.length / pageSize))
+    const current = sortedReviews.slice((page - 1) * pageSize, page * pageSize)
 
     const handleSort = (field: SortField) => {
         if (sortField === field) {
@@ -88,11 +94,11 @@ export function ReviewTable() {
     const getStatusIcon = (status: string) => {
         switch (status) {
             case 'approved':
-                return <CheckCircle className="h-4 w-4 text-green-600" />
+                return <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
             case 'rejected':
-                return <XCircle className="h-4 w-4 text-red-600" />
+                return <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
             case 'pending':
-                return <Clock className="h-4 w-4 text-yellow-600" />
+                return <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
             default:
                 return null
         }
@@ -131,7 +137,7 @@ export function ReviewTable() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => bulkUpdateStatus('approved')}
-                                className="text-green-600 hover:text-green-700"
+                                className="text-green-600 hover:text-green-700 dark:text-green-400"
                             >
                                 <CheckCircle className="h-4 w-4 mr-1" />
                                 Approve
@@ -140,7 +146,7 @@ export function ReviewTable() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => bulkUpdateStatus('rejected')}
-                                className="text-red-600 hover:text-red-700"
+                                className="text-red-600 hover:text-red-700 dark:text-red-400"
                             >
                                 <XCircle className="h-4 w-4 mr-1" />
                                 Reject
@@ -234,7 +240,7 @@ export function ReviewTable() {
                         </TableHeader>
 
                         <TableBody>
-                            {sortedReviews.map((review) => (
+                            {current.map((review) => (
                                 <TableRow
                                     key={review.id}
                                     className={selectedReviews.has(review.id) ? 'bg-muted/50' : ''}
@@ -332,6 +338,13 @@ export function ReviewTable() {
                             ))}
                         </TableBody>
                     </Table>
+                </div>
+                <div className="flex items-center justify-between mt-4">
+                    <div className="text-sm text-muted-foreground">Page {page} of {totalPages}</div>
+                    <div className="flex gap-2">
+                        <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Previous</Button>
+                        <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</Button>
+                    </div>
                 </div>
             </CardContent>
 

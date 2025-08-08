@@ -63,7 +63,7 @@ export function ReviewFilters() {
                         <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Status</label>
                         <Select
                             value={filters.status || 'all'}
-                            onValueChange={(value) => setFilters({ status: value as any })}
+                            onValueChange={(value) => setFilters({ status: value as 'pending' | 'approved' | 'rejected' | 'all' })}
                         >
                             <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <SelectValue placeholder="All statuses" />

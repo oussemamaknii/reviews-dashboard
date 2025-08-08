@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { hostawayService } from '@/services/hostaway'
+import { PrismaClient } from '@prisma/client'
+import properties from '@/data/properties.json'
 
 export async function GET(
     request: Request,
@@ -8,28 +9,46 @@ export async function GET(
     try {
         const { property } = await params
         const propertyName = decodeURIComponent(property)
+        // Resolve by id or name
+        const prop = (properties as Array<{ id: string; name: string }>).find(
+            p => p.id === propertyName || p.name.toLowerCase() === propertyName.toLowerCase()
+        )
+        const effectiveName = prop ? prop.name : propertyName
 
-        // Get all reviews from Hostaway
-        const hostawayReviews = await hostawayService.getReviews()
+        const url = new URL(request.url)
+        const page = Math.max(1, Number(url.searchParams.get('page') || '1'))
+        const pageSize = Math.min(100, Math.max(1, Number(url.searchParams.get('pageSize') || '20')))
+        const skip = (page - 1) * pageSize
 
-        // Normalize and filter for the specific property and approved status
-        const normalizedReviews = hostawayReviews
-            .map(review => hostawayService.normalizeReview(review))
-            .filter(review => {
-                // For demo purposes, we'll consider all reviews as approved
-                // In production, you'd filter by review.status === 'approved'
-                return review.property_name.toLowerCase().includes(propertyName.toLowerCase()) ||
-                    propertyName.toLowerCase() === 'all'
+        const prisma = new PrismaClient()
+        const where = effectiveName.toLowerCase() === 'all' ? {} : { property: { name: effectiveName } }
+        const [total, rows] = await Promise.all([
+            prisma.review.count({ where: { ...where, status: 'approved' } }),
+            prisma.review.findMany({
+            include: { categories: true, property: true },
+                where: { ...where, status: 'approved' },
+                orderBy: { submittedAt: 'desc' },
+                skip,
+                take: pageSize
             })
-            .map(review => ({
-                ...review,
-                status: 'approved', // Demo: mark all as approved for public display
-                is_public: true
-            }))
-            .sort((a, b) => new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime())
+        ])
+        const normalizedReviews = rows.map(r => ({
+            id: r.id,
+            property_name: r.property.name,
+            guest_name: r.guestName,
+            rating: r.rating,
+            review_text: r.reviewText,
+            categories: r.categories.map(c => ({ category: c.category, rating: c.rating })),
+            channel: r.channel as 'hostaway' | 'foursquare' | 'airbnb' | 'booking' | 'yelp',
+            submitted_at: r.submittedAt,
+            status: r.status as 'pending' | 'approved' | 'rejected',
+            is_public: r.isPublic,
+            created_at: r.createdAt,
+            updated_at: r.updatedAt
+        }))
 
         // Calculate aggregate statistics
-        const totalReviews = normalizedReviews.length
+        const totalReviews = total
         const averageRating = totalReviews > 0
             ? normalizedReviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
             : 0
@@ -65,14 +84,15 @@ export async function GET(
         return NextResponse.json({
             success: true,
             data: {
-                reviews: normalizedReviews.slice(0, 20), // Limit to 20 most recent
+                reviews: normalizedReviews,
                 statistics: {
                     total_reviews: totalReviews,
                     average_rating: Number(averageRating.toFixed(1)),
                     category_averages: categoryAverages,
                     rating_distribution: ratingDistribution
                 },
-                property_name: propertyName
+                property_name: effectiveName,
+                pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) }
             }
         })
     } catch (error) {
