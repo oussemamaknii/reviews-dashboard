@@ -7,7 +7,8 @@ import { ReviewTable } from '@/components/dashboard/ReviewTable'
 import { PropertyStats } from '@/components/dashboard/PropertyStats'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
-import { RefreshCw, Download } from 'lucide-react'
+import { RefreshCw, Download, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 
 export default function DashboardPage() {
     const { fetchReviews, loading, error, filteredReviews } = useReviewStore()
@@ -82,6 +83,12 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <Link href="/">
+                        <Button variant="outline">
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Back to Landing
+                        </Button>
+                    </Link>
                     <Button variant="outline" onClick={handleExport}>
                         <Download className="h-4 w-4 mr-2" />
                         Export CSV
