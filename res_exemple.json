@@ -1,0 +1,543 @@
+{
+  "fsq_place_id": "string",
+  "latitude": {},
+  "longitude": {},
+  "categories": [
+    {
+      "fsq_category_id": "string",
+      "name": "string",
+      "short_name": "string",
+      "plural_name": "string",
+      "icon": {
+        "id": "string",
+        "created_at": "2025-08-07T13:29:30.980Z",
+        "prefix": "string",
+        "suffix": "string",
+        "width": 0,
+        "height": 0,
+        "classifications": [
+          "string"
+        ],
+        "tip": {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "text": "string",
+          "url": "string",
+          "lang": "string",
+          "agree_count": 0,
+          "disagree_count": 0
+        }
+      }
+    }
+  ],
+  "chains": [
+    {
+      "fsq_chain_id": "string",
+      "name": "string",
+      "logo": {
+        "id": "string",
+        "created_at": "2025-08-07T13:29:30.980Z",
+        "prefix": "string",
+        "suffix": "string",
+        "width": 0,
+        "height": 0,
+        "classifications": [
+          "string"
+        ],
+        "tip": {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "text": "string",
+          "url": "string",
+          "lang": "string",
+          "agree_count": 0,
+          "disagree_count": 0
+        }
+      },
+      "parent_id": "string"
+    }
+  ],
+  "date_closed": "2025-08-07",
+  "date_created": "string",
+  "date_refreshed": "string",
+  "description": "string",
+  "distance": 0,
+  "email": "string",
+  "extended_location": {
+    "dma": "string",
+    "census_block_id": "string"
+  },
+  "attributes": {
+    "restroom": {},
+    "outdoor_seating": {},
+    "atm": {},
+    "has_parking": {},
+    "wifi": "string",
+    "delivery": {},
+    "reservations": {},
+    "takes_credit_card": {}
+  },
+  "hours": {
+    "display": "string",
+    "is_local_holiday": true,
+    "open_now": true,
+    "regular": [
+      {
+        "close": "string",
+        "day": 0,
+        "open": "string"
+      }
+    ]
+  },
+  "hours_popular": [
+    {
+      "close": "string",
+      "day": 0,
+      "open": "string"
+    }
+  ],
+  "link": "string",
+  "location": {
+    "address": "string",
+    "locality": "string",
+    "region": "string",
+    "postcode": "string",
+    "admin_region": "string",
+    "post_town": "string",
+    "po_box": "string",
+    "country": "string",
+    "formatted_address": "string"
+  },
+  "menu": "string",
+  "name": "string",
+  "photos": [
+    {
+      "fsq_photo_id": "string",
+      "created_at": "2025-08-07T13:29:30.980Z",
+      "prefix": "string",
+      "suffix": "string",
+      "width": 0,
+      "height": 0,
+      "classifications": [
+        "string"
+      ],
+      "tip": {
+        "fsq_tip_id": "string",
+        "created_at": "2025-08-07T13:29:30.980Z",
+        "text": "string",
+        "url": "string",
+        "photo": {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "prefix": "string",
+          "suffix": "string",
+          "width": 0,
+          "height": 0,
+          "classifications": [
+            "string"
+          ],
+          "tip": {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "text": "string",
+            "url": "string",
+            "lang": "string",
+            "agree_count": 0,
+            "disagree_count": 0
+          }
+        },
+        "lang": "string",
+        "agree_count": 0,
+        "disagree_count": 0
+      }
+    }
+  ],
+  "popularity": 0,
+  "placemaker_url": "string",
+  "price": 0,
+  "rating": 0,
+  "related_places": {
+    "parent": {
+      "fsq_place_id": "string",
+      "latitude": {},
+      "longitude": {},
+      "categories": [
+        {
+          "fsq_category_id": "string",
+          "name": "string",
+          "short_name": "string",
+          "plural_name": "string",
+          "icon": {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "prefix": "string",
+            "suffix": "string",
+            "width": 0,
+            "height": 0,
+            "classifications": [
+              "string"
+            ],
+            "tip": {
+              "id": "string",
+              "created_at": "2025-08-07T13:29:30.980Z",
+              "text": "string",
+              "url": "string",
+              "lang": "string",
+              "agree_count": 0,
+              "disagree_count": 0
+            }
+          }
+        }
+      ],
+      "chains": [
+        {
+          "fsq_chain_id": "string",
+          "name": "string",
+          "logo": {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "prefix": "string",
+            "suffix": "string",
+            "width": 0,
+            "height": 0,
+            "classifications": [
+              "string"
+            ],
+            "tip": {
+              "id": "string",
+              "created_at": "2025-08-07T13:29:30.980Z",
+              "text": "string",
+              "url": "string",
+              "lang": "string",
+              "agree_count": 0,
+              "disagree_count": 0
+            }
+          },
+          "parent_id": "string"
+        }
+      ],
+      "date_closed": "2025-08-07",
+      "date_created": "string",
+      "date_refreshed": "string",
+      "description": "string",
+      "distance": 0,
+      "email": "string",
+      "extended_location": {
+        "dma": "string",
+        "census_block_id": "string"
+      },
+      "attributes": {
+        "restroom": {},
+        "outdoor_seating": {},
+        "atm": {},
+        "has_parking": {},
+        "wifi": "string",
+        "delivery": {},
+        "reservations": {},
+        "takes_credit_card": {}
+      },
+      "hours": {
+        "display": "string",
+        "is_local_holiday": true,
+        "open_now": true,
+        "regular": [
+          {
+            "close": "string",
+            "day": 0,
+            "open": "string"
+          }
+        ]
+      },
+      "hours_popular": [
+        {
+          "close": "string",
+          "day": 0,
+          "open": "string"
+        }
+      ],
+      "link": "string",
+      "location": {
+        "address": "string",
+        "locality": "string",
+        "region": "string",
+        "postcode": "string",
+        "admin_region": "string",
+        "post_town": "string",
+        "po_box": "string",
+        "country": "string",
+        "formatted_address": "string"
+      },
+      "menu": "string",
+      "name": "string",
+      "photos": [
+        {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "prefix": "string",
+          "suffix": "string",
+          "width": 0,
+          "height": 0,
+          "tip": {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "text": "string",
+            "url": "string",
+            "lang": "string",
+            "agree_count": 0,
+            "disagree_count": 0
+          }
+        }
+      ],
+      "popularity": 0,
+      "placemaker_url": "string",
+      "price": 0,
+      "rating": 0,
+      "social_media": {
+        "facebook_id": "string",
+        "instagram": "string",
+        "twitter": "string"
+      },
+      "stats": {
+        "total_photos": 0,
+        "total_ratings": 0,
+        "total_tips": 0
+      },
+      "store_id": "string",
+      "tastes": [
+        "string"
+      ],
+      "tel": "string",
+      "tips": [
+        {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "text": "string",
+          "url": "string",
+          "lang": "string",
+          "agree_count": 0,
+          "disagree_count": 0
+        }
+      ],
+      "verified": true,
+      "website": "string"
+    },
+    "children": [
+      {
+        "fsq_place_id": "string",
+        "latitude": {},
+        "longitude": {},
+        "categories": [
+          {
+            "fsq_category_id": "string",
+            "name": "string",
+            "short_name": "string",
+            "plural_name": "string",
+            "icon": {
+              "id": "string",
+              "created_at": "2025-08-07T13:29:30.980Z",
+              "prefix": "string",
+              "suffix": "string",
+              "width": 0,
+              "height": 0,
+              "classifications": [
+                "string"
+              ],
+              "tip": {
+                "id": "string",
+                "created_at": "2025-08-07T13:29:30.980Z",
+                "text": "string",
+                "url": "string",
+                "lang": "string",
+                "agree_count": 0,
+                "disagree_count": 0
+              }
+            }
+          }
+        ],
+        "chains": [
+          {
+            "fsq_chain_id": "string",
+            "name": "string",
+            "logo": {
+              "id": "string",
+              "created_at": "2025-08-07T13:29:30.980Z",
+              "prefix": "string",
+              "suffix": "string",
+              "width": 0,
+              "height": 0,
+              "classifications": [
+                "string"
+              ],
+              "tip": {
+                "id": "string",
+                "created_at": "2025-08-07T13:29:30.980Z",
+                "text": "string",
+                "url": "string",
+                "lang": "string",
+                "agree_count": 0,
+                "disagree_count": 0
+              }
+            },
+            "parent_id": "string"
+          }
+        ],
+        "date_closed": "2025-08-07",
+        "date_created": "string",
+        "date_refreshed": "string",
+        "description": "string",
+        "distance": 0,
+        "email": "string",
+        "extended_location": {
+          "dma": "string",
+          "census_block_id": "string"
+        },
+        "attributes": {
+          "restroom": {},
+          "outdoor_seating": {},
+          "atm": {},
+          "has_parking": {},
+          "wifi": "string",
+          "delivery": {},
+          "reservations": {},
+          "takes_credit_card": {}
+        },
+        "hours": {
+          "display": "string",
+          "is_local_holiday": true,
+          "open_now": true,
+          "regular": [
+            {
+              "close": "string",
+              "day": 0,
+              "open": "string"
+            }
+          ]
+        },
+        "hours_popular": [
+          {
+            "close": "string",
+            "day": 0,
+            "open": "string"
+          }
+        ],
+        "link": "string",
+        "location": {
+          "address": "string",
+          "locality": "string",
+          "region": "string",
+          "postcode": "string",
+          "admin_region": "string",
+          "post_town": "string",
+          "po_box": "string",
+          "country": "string",
+          "formatted_address": "string"
+        },
+        "menu": "string",
+        "name": "string",
+        "photos": [
+          {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "prefix": "string",
+            "suffix": "string",
+            "width": 0,
+            "height": 0,
+            "tip": {
+              "id": "string",
+              "created_at": "2025-08-07T13:29:30.980Z",
+              "text": "string",
+              "url": "string",
+              "lang": "string",
+              "agree_count": 0,
+              "disagree_count": 0
+            }
+          }
+        ],
+        "popularity": 0,
+        "placemaker_url": "string",
+        "price": 0,
+        "rating": 0,
+        "social_media": {
+          "facebook_id": "string",
+          "instagram": "string",
+          "twitter": "string"
+        },
+        "stats": {
+          "total_photos": 0,
+          "total_ratings": 0,
+          "total_tips": 0
+        },
+        "store_id": "string",
+        "tastes": [
+          "string"
+        ],
+        "tel": "string",
+        "tips": [
+          {
+            "id": "string",
+            "created_at": "2025-08-07T13:29:30.980Z",
+            "text": "string",
+            "url": "string",
+            "lang": "string",
+            "agree_count": 0,
+            "disagree_count": 0
+          }
+        ],
+        "verified": true,
+        "website": "string"
+      }
+    ]
+  },
+  "social_media": {
+    "facebook_id": "string",
+    "instagram": "string",
+    "twitter": "string"
+  },
+  "stats": {
+    "total_photos": 0,
+    "total_ratings": 0,
+    "total_tips": 0
+  },
+  "store_id": "string",
+  "tastes": [
+    "string"
+  ],
+  "tel": "string",
+  "tips": [
+    {
+      "fsq_tip_id": "string",
+      "created_at": "2025-08-07T13:29:30.980Z",
+      "text": "string",
+      "url": "string",
+      "photo": {
+        "id": "string",
+        "created_at": "2025-08-07T13:29:30.980Z",
+        "prefix": "string",
+        "suffix": "string",
+        "width": 0,
+        "height": 0,
+        "classifications": [
+          "string"
+        ],
+        "tip": {
+          "id": "string",
+          "created_at": "2025-08-07T13:29:30.980Z",
+          "text": "string",
+          "url": "string",
+          "lang": "string",
+          "agree_count": 0,
+          "disagree_count": 0
+        }
+      },
+      "lang": "string",
+      "agree_count": 0,
+      "disagree_count": 0
+    }
+  ],
+  "verified": true,
+  "unresolved_flags": [
+    "string"
+  ],
+  "veracity_rating": {},
+  "website": "string"
+}
