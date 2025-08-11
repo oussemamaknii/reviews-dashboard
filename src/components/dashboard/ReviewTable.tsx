@@ -52,6 +52,7 @@ export function ReviewTable() {
         updateReviewStatus,
         bulkUpdateStatus
     } = useReviewStore()
+    const { syncingReviewIds } = useReviewStore()
 
     const [sortField, setSortField] = useState<SortField>('submitted_at')
     const [sortOrder, setSortOrder] = useState<SortOrder>('desc')
@@ -295,11 +296,11 @@ export function ReviewTable() {
                                     <TableCell>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="sm">
+                                                <Button variant="ghost" size="sm" disabled={syncingReviewIds.has(review.id)}>
                                                     <MoreHorizontal className="h-4 w-4" />
                                                 </Button>
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end" className="bg-white border border-gray-200">
+                                <DropdownMenuContent align="end" className="bg-white border border-gray-200">
                                                 <DropdownMenuItem onClick={() => setSelectedReview(review)} className="bg-white hover:bg-gray-100">
                                                     <Eye className="h-4 w-4 mr-2" />
                                                     View Details
@@ -333,6 +334,9 @@ export function ReviewTable() {
                                                 )}
                                             </DropdownMenuContent>
                                         </DropdownMenu>
+                                        {syncingReviewIds.has(review.id) && (
+                                            <span className="ml-2 text-xs text-muted-foreground">Syncing…</span>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -341,9 +345,14 @@ export function ReviewTable() {
                 </div>
                 <div className="flex items-center justify-between mt-4">
                     <div className="text-sm text-muted-foreground">Page {page} of {totalPages}</div>
-                    <div className="flex gap-2">
-                        <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Previous</Button>
-                        <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</Button>
+                    <div className="flex items-center gap-4">
+                        {syncingReviewIds.size > 0 && (
+                            <span className="text-xs text-muted-foreground">{syncingReviewIds.size} updating…</span>
+                        )}
+                        <div className="flex gap-2">
+                            <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Previous</Button>
+                            <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</Button>
+                        </div>
                     </div>
                 </div>
             </CardContent>

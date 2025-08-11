@@ -9,6 +9,7 @@ interface ReviewState {
     loading: boolean
     error: string | null
     selectedReviews: Set<string>
+    syncingReviewIds: Set<string>
 }
 
 interface ReviewActions {
@@ -20,6 +21,10 @@ interface ReviewActions {
     selectAllReviews: () => void
     clearSelection: () => void
     bulkUpdateStatus: (status: 'approved' | 'rejected') => void
+    // Internal helpers for optimistic UI
+    _applyLocalStatus: (ids: string[], status: 'approved' | 'rejected' | 'pending') => void
+    _revertLocalStatus: (snapshot: NormalizedReview[]) => void
+    _enqueueAndTrackJob: (affectedIds: string[], endpoint: string, payload: any) => Promise<void>
     setLoading: (loading: boolean) => void
     setError: (error: string | null) => void
     fetchReviews: () => Promise<void>
@@ -40,6 +45,7 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     loading: false,
     error: null,
     selectedReviews: new Set(),
+    syncingReviewIds: new Set(),
 
     // Actions
     setReviews: (reviews) => {
@@ -63,17 +69,15 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     },
 
     updateReviewStatus: async (reviewId, status) => {
+        const current = get().reviews
+        const snapshot = current.filter(r => r.id === reviewId)
+        // Optimistic apply
+        get()._applyLocalStatus([reviewId], status)
         try {
-            set({ loading: true })
-            await fetch('/api/reviews/update-status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: reviewId, status })
-            })
-            // Refetch from source of truth
-            await get().fetchReviews()
-        } finally {
-            set({ loading: false })
+            await get()._enqueueAndTrackJob([reviewId], '/api/reviews/update-status', { id: reviewId, status })
+        } catch (e) {
+            // Revert on terminal failure
+            get()._revertLocalStatus(snapshot)
         }
     },
 
@@ -97,18 +101,66 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     },
 
     bulkUpdateStatus: async (status) => {
+        const selectedIds = Array.from(get().selectedReviews)
+        const snapshot = get().reviews.filter(r => selectedIds.includes(r.id))
+        get()._applyLocalStatus(selectedIds, status)
         try {
-            set({ loading: true })
-            const selectedIds = Array.from(get().selectedReviews)
-            await fetch('/api/reviews/bulk-update-status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ids: selectedIds, status })
-            })
-            await get().fetchReviews()
+            await get()._enqueueAndTrackJob(selectedIds, '/api/reviews/bulk-update-status', { ids: selectedIds, status })
             set({ selectedReviews: new Set() })
+        } catch (e) {
+            get()._revertLocalStatus(snapshot)
+        }
+    },
+
+    _applyLocalStatus: (ids, status) => {
+        const reviews = get().reviews.map(r => ids.includes(r.id) ? { ...r, status } : r)
+        const filteredReviews = applyFilters(reviews, get().filters)
+        set({ reviews, filteredReviews })
+    },
+
+    _revertLocalStatus: (snapshot) => {
+        const map = new Map(snapshot.map(r => [r.id, r]))
+        const reviews = get().reviews.map(r => map.has(r.id) ? map.get(r.id)! : r)
+        set({ reviews, filteredReviews: applyFilters(reviews, get().filters) })
+    },
+
+    _enqueueAndTrackJob: async (affectedIds, endpoint, payload) => {
+        // mark affected ids as syncing
+        const syncing = new Set(get().syncingReviewIds)
+        affectedIds.forEach(id => syncing.add(id))
+        set({ syncingReviewIds: syncing, loading: true })
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Idempotency-Key': crypto.randomUUID(),
+                },
+                body: JSON.stringify(payload),
+            })
+            if (!res.ok && res.status !== 202) throw new Error('Request failed')
+            const json = await res.json() as { jobId?: string }
+            const jobId = json.jobId
+            if (!jobId) return
+
+            // Poll until completed or failed
+            const poll = async (): Promise<void> => {
+                for (let i = 0; i < 20; i++) {
+                    const jr = await fetch(`/api/jobs/${jobId}`)
+                    if (jr.ok) {
+                        const j = await jr.json() as { job: { state: string } }
+                        if (j.job.state === 'succeeded') return
+                        if (j.job.state === 'failed') throw new Error('Job failed')
+                    }
+                    await new Promise(r => setTimeout(r, 500))
+                }
+            }
+            await poll()
         } finally {
-            set({ loading: false })
+            // unmark affected ids
+            const syncingAfter = new Set(get().syncingReviewIds)
+            affectedIds.forEach(id => syncingAfter.delete(id))
+            set({ syncingReviewIds: syncingAfter, loading: false })
         }
     },
 
