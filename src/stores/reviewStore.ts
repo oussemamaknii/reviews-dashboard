@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import { NormalizedReview, ReviewFilters, PropertyStats } from '@/types/review'
 
+type UpdateStatusPayload = { id: string; status: 'approved' | 'rejected' | 'pending' }
+type BulkUpdateStatusPayload = { ids: string[]; status: 'approved' | 'rejected' | 'pending' }
+type JobRequestPayload = UpdateStatusPayload | BulkUpdateStatusPayload
+
 interface ReviewState {
     reviews: NormalizedReview[]
     filteredReviews: NormalizedReview[]
@@ -24,7 +28,7 @@ interface ReviewActions {
     // Internal helpers for optimistic UI
     _applyLocalStatus: (ids: string[], status: 'approved' | 'rejected' | 'pending') => void
     _revertLocalStatus: (snapshot: NormalizedReview[]) => void
-    _enqueueAndTrackJob: (affectedIds: string[], endpoint: string, payload: any) => Promise<void>
+    _enqueueAndTrackJob: (affectedIds: string[], endpoint: string, payload: JobRequestPayload) => Promise<void>
     setLoading: (loading: boolean) => void
     setError: (error: string | null) => void
     fetchReviews: () => Promise<void>
