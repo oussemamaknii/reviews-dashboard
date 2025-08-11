@@ -56,9 +56,6 @@ export function PropertiesMap({ properties }: { properties: PropertyItem[] }) {
     return null
   }
 
-  curl - sS "https://api.yelp.com/v3/businesses/aXhULppx31yHNxz5PGQ0IQ/reviews?limit=20&sort_by=yelp_sort" \
-  -H "authorization: Bearer rSmQ6gXd-wXYlwp-rsfJdGNS7qLdA9VQQqrooYqx3akXQHjAov7uFM9gfKDspAnkIZi_Tnu7HfkPQBK8RnNBiom3MR9by2ziok8fgKgm6PEfpitVQgA-DINq-ciUaHYx" - H "accept: application/json"
-
   return (
     <div className="bg-white rounded-2xl shadow-lg p-4">
       <div className="mb-3">
