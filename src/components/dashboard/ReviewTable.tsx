@@ -350,13 +350,13 @@ export function ReviewTable() {
 
             {/* Review Details Dialog */}
             <Dialog open={!!selectedReview} onOpenChange={() => setSelectedReview(null)}>
-                <DialogContent className="max-w-2xl">
+                <DialogContent className="max-w-2xl bg-white">
                     <DialogHeader>
                         <DialogTitle>Review Details</DialogTitle>
                     </DialogHeader>
 
                     {selectedReview && (
-                        <div className="space-y-4">
+                        <div className="space-y-4 bg-white p-4 rounded-lg">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <h4 className="font-semibold mb-1">Property</h4>

@@ -1,5 +1,7 @@
 # Flex Living Reviews Dashboard
 
+APP URL => https://reviews-dashboard-a5e6nwji3-oussemamakniii-gmailcoms-projects.vercel.app/
+
 A full-stack review management platform for Flex Living with unified data model, manager dashboard, and public review pages. Integrates Hostaway and Yelp, normalizes data, and provides bulk moderation, analytics, and exports.
 
 ## Tech stack
